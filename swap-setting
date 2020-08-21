@@ -1,0 +1,40 @@
+Change swap memory size
+-----------------------------------------------------
+
+$ sudo swapon --show		// -------------------- to check swap memory detail or
+$ free -h	
+
+1. First deallocate swap memory
+
+$ sudo swapoff /swapfile
+ 
+2. check swap detail
+
+$ free -h
+
+3. allocate swap new memory
+
+$ sudo fallocate -l 10G /swapfile
+$ ls -lh swapfile
+$ sudo mkswap /swapfile  	// ----------- this cmd will derigester the exsisting swap and register the new swap with new UUID
+
+$ sudo swapon /swapfile 	//------------------------ enable the new swapfile
+
+
+Check and change swappiness (it is a value which decide how frequently swap memory begin using by system instead of RAM)
+Its value should be 60 but lesser value will increase the uses of physical RAM.
+To change this value use the below cmd.
+
+1. Check swappiness value
+
+$ cat /proc/sys/vm/swappiness
+
+2. Change sysctl.conf file 
+
+$ sudo nano /etc/sysctl.conf
+
+2. Add this line at the very end of the file.
+
+	vm.swappiness=10
+
+3. Save the file and reboot.
